@@ -5,16 +5,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import serzh.com.config.WebDriverConfig;
 import serzh.com.selenium.pages.SearchPage;
-
-import java.util.List;
 
 /**
  * Created by Serzh on 6/3/17.
@@ -22,32 +20,31 @@ import java.util.List;
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {WebDriverConfig.class})
+@TestPropertySource(value = {"classpath:selenium.yml"})
 public class SearchPageTest {
 
     private SearchPage searchPage;
 
     @Autowired
+    private WebDriver driver;
+
+    @Autowired
     public void configure(){
         this.searchPage = new SearchPage(driver);
     }
-    
-    @Autowired
-    private WebDriver driver;
+
+    @Value("${main_page}")
+    private String main_page;
+
 
     @Before
     public  void setup() {
-        driver.get("https://dimetogo.com/");
+        driver.get(main_page);
     }
 
     @Test
     public void titleTest() {
         Assert.assertEquals("DimeToGo", driver.getTitle());
-        WebElement element11 = driver.findElement(By.cssSelector("div[class='dropdown-list']"));
-        System.out.println("!!!!!!!!!!!!!!!!");
-        List<WebElement> elements = element11.findElements(By.cssSelector("div[class='dropdown-list-item']"));
-        System.out.println(element11);
-        System.out.println("!!!!!!!!!!!!!!!!");
-
     }
 
     @Test

@@ -121,7 +121,7 @@ public class SearchPage extends AbstractPage {
         return startPointInput.getAttribute("placeholder");
     }
 
-    public String getStartPointFieldValue(){
+    public String getStartPointFieldValue() {
         return startPointInput.getAttribute("value");
     }
 
@@ -146,11 +146,8 @@ public class SearchPage extends AbstractPage {
     }
 
     public SearchPage enterStartPointInput(String input) {
-        String[] inputLetters = input.split("");
         startPointInput.click();
-        for (String inputLetter : inputLetters) {
-            startPointInput.sendKeys(inputLetter);
-        }
+        startPointInput.sendKeys(input);
         waitForOneSecond();
         startPointInput.sendKeys(Keys.ARROW_DOWN);
         startPointInput.sendKeys(Keys.ENTER);
